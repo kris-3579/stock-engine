@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/stock-trading-engine/static/js/main.d26607c4.js",
+    "index.html": "/stock-trading-engine/index.html",
+    "main.d26607c4.js.map": "/stock-trading-engine/static/js/main.d26607c4.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.d26607c4.js"
+  ]
+}

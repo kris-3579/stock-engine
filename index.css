@@ -1,0 +1,104 @@
+
+.root {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+
+}
+
+#live-time {
+  color: white;
+  font-family:  Futura, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 5px 5px 5px black;
+
+  padding-bottom: 0.5in;
+
+}
+
+#live-data {
+
+  bottom: 0;
+  color: white;
+  font-family:  Futura, sans-serif;
+  font-weight: bold;
+  -webkit-text-stroke: 0.5px black;
+  text-align: center;
+  text-shadow: 5px 5px 5px black;
+  padding-bottom: 0.5in;
+}
+
+#live-match-data {
+
+  bottom: 0;
+  color: green;
+  font-family:  Futura, sans-serif;
+  font-weight: bold;
+  -webkit-text-stroke: 0.5px black;
+  text-align: center;
+  text-shadow: 5px 5px 5px black;
+}
+
+p {
+  font-family:  Futura, sans-serif;
+  font-weight: bold;
+
+}
+
+.titleName {
+
+  text-align: center;
+  margin: auto;
+  font-size: 5vw;
+  width: fit-content;
+  color: white;
+  text-shadow: 5px 5px 10px black;
+  
+}
+
+.table-container {
+  width: 60%;
+  margin: auto;
+  max-height: 400px; /* Limit height */
+  overflow-y: auto; /* Enable scrolling */
+  border: 1px solid black;
+  box-shadow: 5px 5px 10px black;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f9f9f9;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #444;
+  color: white;
+}
+
+tbody {
+  display: block;
+  max-height: 350px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* Green background for matched orders */
+tr td:first-child {
+  font-weight: bold;
+}
+
+
