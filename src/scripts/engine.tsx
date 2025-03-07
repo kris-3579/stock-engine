@@ -1,13 +1,13 @@
 import stocks from './JSON/structured_company_stocks.json';
 import BookOrder from './bookOrder';
-import Order from './order';
 
-const NUMSTOCKS = 4;
+const NUMSTOCKS = 1024;
 
 class Engine {
     books: BookOrder[] = [];
-    currentOrder: Order | null = null;
+    currentOrder: string= '';
     matchString: string = '';
+    tableString: string = '';
 
     addBook(buyOrSell: 'BUY' | 'SELL', ticketSymbol: string, quantity: number, price: number) {
         for (let b of this.books) {
@@ -28,15 +28,21 @@ class Engine {
             let buyOrSell: 'BUY' | 'SELL' = Math.random() >= 0.5 ? 'BUY' : 'SELL';
             let quantity = Math.floor(Math.random() * 50) + 1;
             let price = Number((Math.random() * 500 + 1).toFixed(2));
-
+    
             let book = this.addBook(buyOrSell, ticketSymbol, quantity, price);
             book.addOrder(buyOrSell, ticketSymbol, quantity, price);
-            this.currentOrder = book.currentOrder;
+            
+            // Only update currentOrder if it's not null after matching
+            if (book.currentOrder !== "") {
+                this.currentOrder = book.currentOrder;
+                this.tableString = book.currentOrder; 
+            }
+            
             // Ensure `matchString` is properly set
             if (book.matchString !== "") {
                 this.matchString = book.matchString;
+                this.tableString = book.matchString;
             }
-
         }, 100);
     }
 }

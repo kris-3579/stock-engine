@@ -23,7 +23,7 @@
   color: white;
   font-family:  Futura, sans-serif;
   font-weight: bold;
-  -webkit-text-stroke: 1px;
+  -webkit-text-stroke: 0.5px black;
   text-align: center;
   text-shadow: 5px 5px 5px black;
   padding-bottom: 0.5in;
@@ -35,7 +35,7 @@
   color: green;
   font-family:  Futura, sans-serif;
   font-weight: bold;
-  -webkit-text-stroke: 1px;
+  -webkit-text-stroke: 0.5px black;
   text-align: center;
   text-shadow: 5px 5px 5px black;
 }
@@ -101,8 +101,4 @@ tr td:first-child {
   font-weight: bold;
 }
 
-tr td:first-child:contains("MATCH") {
-  background-color: #d4edda; /* Light green */
-  color: #155724;
-}
 

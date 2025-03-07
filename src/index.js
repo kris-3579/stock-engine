@@ -5,7 +5,11 @@ import {engine } from '../src/scripts/engine.tsx';
 
 function updateOrdersTable() {
   try {
-    let latestOrder = engine.currentOrder.display();
+    // Check if currentOrder exists
+    if (!engine.currentOrder) return;
+    
+    let latestOrder = engine.tableString;
+  
     const ordersTable = document.getElementById('orders-body');
 
     const orderParts = latestOrder.split('|').map(part => part.trim());
@@ -17,7 +21,8 @@ function updateOrdersTable() {
     const price = orderParts[3];
     const time = orderParts[4];
 
-
+    // Skip orders with quantity 0
+    if (quantity === '0') return;
 
     const lastRow = ordersTable.lastElementChild;
     if (lastRow) {
@@ -54,19 +59,20 @@ function updateOrdersTable() {
 }
 
 
-setInterval(updateOrdersTable, 100);
+setInterval(updateOrdersTable, 50);
 
 function updateLiveData() {
   try {
 
-    let latestOrders = engine.currentOrder.display();
+    let latestOrders = engine.currentOrder;
     // Join the order strings to display them
     document.getElementById('live-data').textContent = latestOrders;
-
+    
   } catch (error) {
     console.error('Error fetching live-data', error);
   }
 }
+
 updateLiveData();
 setInterval(updateLiveData, 1000);
 

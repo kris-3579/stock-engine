@@ -9,7 +9,9 @@ export default class Sell extends Order {
     }
 
     display(): string {
-        return `SELL | ${this.ticketSymbol} | ${this.quantity} | ${this.price} | ${super.getTime()}`;
+        let s  = `SELL | ${this.ticketSymbol} | ${this.quantity} | ${this.price} | ${super.getTime()}`;
+        console.log(s);
+        return s;
     }
 }
 

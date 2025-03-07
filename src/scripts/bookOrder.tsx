@@ -10,7 +10,7 @@ export default class BookOrder implements Trade  {
 
   matchString: string = "";
 
-  currentOrder: Order| null = null;
+  currentOrder: string= "";
 
 
 
@@ -33,7 +33,7 @@ export default class BookOrder implements Trade  {
       let b = new Buy(ticketSymbol, quantity, price);
       this.buyOrders.push(b);
 
-      this.currentOrder = b;
+      this.currentOrder = b.display();
 
 
     }
@@ -41,15 +41,13 @@ export default class BookOrder implements Trade  {
 
       let s = new Sell(ticketSymbol, quantity, price);
       this.sellOrders.push(s);
-      this.currentOrder = s;
+      this.currentOrder = s.display();
 
 
     } else {
 
       throw new Error("Invalid orderType");
     }
-
-   
 
     this.matchOrder();
     
@@ -67,21 +65,31 @@ export default class BookOrder implements Trade  {
   // FIFO algorthim is a price-time algorithim
   // Pro-rata utilizes price-and proportions
   // After writing matchOrder function last, I will implement a FIFO-similar algorithim and add a time component 
-  matchOrder() {
-    this.buyOrders.sort((a, b) => b.price - a.price);
-    this.sellOrders.sort((a, b) => a.price - b.price);
+matchOrder() {
 
     let pointerBuy = 0, pointerSell = 0;
+
+    this.buyOrders.sort((a, b) => {
+      if (b.price !== a.price) return b.price - a.price; // Higher price first
+      return new Date(a.getTime()).getTime() - new Date(b.getTime()).getTime(); // Older orders first
+    });
+
+    this.sellOrders.sort((a, b) => {
+        if (a.price !== b.price) return a.price - b.price; // Lower price first
+        return new Date(a.getTime()).getTime() - new Date(b.getTime()).getTime(); // Older orders first
+    });
 
     while (pointerBuy < this.buyOrders.length && pointerSell < this.sellOrders.length) {
         let buyOrder = this.buyOrders[pointerBuy];
         let sellOrder = this.sellOrders[pointerSell];
 
+        
+
         if (buyOrder.price >= sellOrder.price) {
             let tradeQuantity = Math.min(buyOrder.quantity, sellOrder.quantity);
 
             // Store "MATCH" before modifying the order quantities
-            this.matchString  = `MATCH | ${buyOrder.ticketSymbol} | ${tradeQuantity} | ${sellOrder.price} | ${new Date().toLocaleString()} `;
+            this.matchString = `MATCH | ${buyOrder.ticketSymbol} | ${tradeQuantity} | ${sellOrder.price} | ${new Date().toLocaleString()} `;
 
             // Deduct traded quantity
             buyOrder.quantity -= tradeQuantity;
@@ -90,12 +98,20 @@ export default class BookOrder implements Trade  {
             // Remove fully matched orders
             if (buyOrder.quantity === 0) {
                 this.buyOrders.splice(pointerBuy, 1);
+                // Important: If the currentOrder was this buy order, set it to null
+                if (this.currentOrder === buyOrder.display()) {
+                    this.currentOrder = "";
+                }
             } else {
                 pointerBuy++;
             }
 
             if (sellOrder.quantity === 0) {
                 this.sellOrders.splice(pointerSell, 1);
+                // Important: If the currentOrder was this sell order, set it to null
+                if (this.currentOrder === sellOrder.display()) {
+                    this.currentOrder = "";
+                }
             } else {
                 pointerSell++;
             }
@@ -108,17 +124,13 @@ export default class BookOrder implements Trade  {
     this.sellOrders = this.sellOrders.slice(pointerSell);
 }
 
-
-
-
-
-
   getTicketSymbol(): string {
     return this.ticketSymbol;
   }
 
   display(): string {
 
+  console.log(this.matchOrder);
    return this.matchString;
 }
 
